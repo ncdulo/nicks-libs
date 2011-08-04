@@ -1,16 +1,17 @@
-all: nicks-libs
+CC=g++
+CFLAGS=-c -Wall
+LDFLAGS=
+SOURCES=Game.cpp Input.cpp Output.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=nick-libs
 
-nicks-libs: Game.o Input.o Output.o
-	g++ Game.o Input.o Output.o -o nicks-libs
-	
-Game.o: Game.cpp
-	g++ -c Game.cpp
+all: $(SOURCES) $(EXECUTABLE)
 
-Input.o: Input.cpp
-	g++ -c Input.cpp
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-Output.o: Output.cpp
-	g++ -c Output.cpp
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -rf *.o nicks-libs
+	rm -rf *.o $(EXECUTABLE)
